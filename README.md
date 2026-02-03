@@ -23,28 +23,9 @@ A simple, web-based Tic-Tac-Toe game for two players on the same device.
 5. If all cells are filled with no winner, the game is a draw
 6. Click "Restart Game" to start a new game at any time
 
-## Deployment to GitHub Pages
+## LLM tool(s) Used
 
-### Step 1: Push to GitHub
-```bash
-git add .
-git commit -m "Add Tic-Tac-Toe game"
-git push origin main
-```
-
-### Step 2: Enable GitHub Pages
-1. Go to your repository on GitHub
-2. Click on "Settings"
-3. Navigate to "Pages" in the left sidebar
-4. Under "Source", select "Deploy from a branch"
-5. Select the `main` branch and `/ (root)` folder
-6. Click "Save"
-
-### Step 3: Access Your Game
-After a few minutes, your game will be available at:
-```
-https://<your-username>.github.io/<repository-name>/
-```
+- Claude Sonnet 4.5 (Through GitHub Copilot Agent)
 
 ## Technologies Used
 
