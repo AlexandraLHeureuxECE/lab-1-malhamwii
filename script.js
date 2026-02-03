@@ -5,8 +5,8 @@ let gameActive = true;
 let moveCount = 0;
 
 // Customization settings
-let currentTheme = localStorage.getItem('theme') || 'purple';
-let currentMarks = localStorage.getItem('marks') || 'classic';
+let currentTheme = 'purple';
+let currentMarks = 'classic';
 
 const markStyles = {
     classic: { X: 'X', O: 'O' },
@@ -234,7 +234,6 @@ function toggleCustomization() {
 
 function changeTheme(theme) {
     currentTheme = theme;
-    localStorage.setItem('theme', theme);
     applyTheme(theme);
     
     // Update active button
@@ -249,7 +248,6 @@ function applyTheme(theme) {
 
 function changeMarks(marks) {
     currentMarks = marks;
-    localStorage.setItem('marks', marks);
     applyMarks(marks);
     
     // Update active button
