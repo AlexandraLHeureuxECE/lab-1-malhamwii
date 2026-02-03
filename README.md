@@ -33,6 +33,10 @@ A simple, web-based Tic-Tac-Toe game for two players on the same device.
 - CSS3
 - Vanilla JavaScript
 
+## GitHub Pages link
+
+https://alexandralheureuxece.github.io/lab-1-malhamwii/
+
 ## Local Development
 
 Simply open `index.html` in your web browser to play the game locally.
