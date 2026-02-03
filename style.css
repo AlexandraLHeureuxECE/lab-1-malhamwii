@@ -12,6 +12,23 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    transition: background 0.5s ease;
+}
+
+body.theme-ocean {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body.theme-purple {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body.theme-sunset {
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+}
+
+body.theme-forest {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
 }
 
 .container {
@@ -28,6 +45,108 @@ h1 {
     color: #333;
     margin-bottom: 20px;
     font-size: 2.5em;
+}
+
+.customization-panel {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.customize-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #667eea;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.customize-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.customize-options {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.customize-options.show {
+    max-height: 300px;
+    padding: 20px;
+    border: 2px solid #667eea;
+}
+
+.option-group {
+    margin-bottom: 15px;
+}
+
+.option-group:last-child {
+    margin-bottom: 0;
+}
+
+.option-group label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.theme-options,
+.mark-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.theme-btn,
+.mark-btn {
+    padding: 8px 16px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.theme-btn:hover,
+.mark-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn.active,
+.mark-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.theme-btn[data-theme="ocean"].active {
+    background: #667eea;
+}
+
+.theme-btn[data-theme="sunset"].active {
+    background: #ff6b6b;
+}
+
+.theme-btn[data-theme="forest"].active {
+    background: #11998e;
+}
+
+.theme-btn[data-theme="purple"].active {
+    background: #764ba2;
 }
 
 .players {
@@ -148,6 +267,14 @@ h1 {
     color: #333;
 }
 
+body.theme-sunset .cell {
+    border-color: #ff6b6b;
+}
+
+body.theme-forest .cell {
+    border-color: #11998e;
+}
+
 .cell:hover:not(.taken) {
     background: #e8e8e8;
     transform: scale(1.05);
@@ -163,6 +290,14 @@ h1 {
 
 .cell.o {
     color: #764ba2;
+}
+
+body.marks-emoji .cell {
+    font-size: 3.5em;
+}
+
+body.marks-symbols .cell {
+    font-size: 3.2em;
 }
 
 .cell.placed {

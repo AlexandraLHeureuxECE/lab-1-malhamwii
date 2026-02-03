@@ -4,6 +4,16 @@ let currentPlayer = 'X';
 let gameActive = true;
 let moveCount = 0;
 
+// Customization settings
+let currentTheme = localStorage.getItem('theme') || 'purple';
+let currentMarks = localStorage.getItem('marks') || 'classic';
+
+const markStyles = {
+    classic: { X: 'X', O: 'O' },
+    emoji: { X: '😎', O: '😊' },
+    symbols: { X: '✖', O: '⭕' }
+};
+
 // DOM elements
 const cells = document.querySelectorAll('.cell');
 const statusDisplay = document.getElementById('status');
@@ -11,6 +21,10 @@ const restartBtn = document.getElementById('restartBtn');
 const winLine = document.getElementById('winLine');
 const playerXIndicator = document.getElementById('playerX');
 const playerOIndicator = document.getElementById('playerO');
+const customizeBtn = document.getElementById('customizeBtn');
+const customizeOptions = document.getElementById('customizeOptions');
+const themeBtns = document.querySelectorAll('.theme-btn');
+const markBtns = document.querySelectorAll('.mark-btn');
 
 // Winning combinations
 const winningConditions = [
@@ -30,6 +44,20 @@ function initializeGame() {
         cell.addEventListener('click', handleCellClick);
     });
     restartBtn.addEventListener('click', restartGame);
+    
+    // Customization event listeners
+    customizeBtn.addEventListener('click', toggleCustomization);
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => changeTheme(btn.dataset.theme));
+    });
+    markBtns.forEach(btn => {
+        btn.addEventListener('click', () => changeMarks(btn.dataset.marks));
+    });
+    
+    // Apply saved preferences
+    applyTheme(currentTheme);
+    applyMarks(currentMarks);
+    
     updateStatus();
 }
 
@@ -45,7 +73,7 @@ function handleCellClick(event) {
 
     // Update game state
     board[clickedCellIndex] = currentPlayer;
-    clickedCell.textContent = currentPlayer;
+    clickedCell.textContent = markStyles[currentMarks][currentPlayer];
     clickedCell.classList.add('taken');
     clickedCell.classList.add(currentPlayer.toLowerCase());
     clickedCell.classList.add('placed');
@@ -198,3 +226,56 @@ function restartGame() {
 
 // Start the game when page loads
 initializeGame();
+
+// Customization functions
+function toggleCustomization() {
+    customizeOptions.classList.toggle('show');
+}
+
+function changeTheme(theme) {
+    currentTheme = theme;
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+    
+    // Update active button
+    themeBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === theme);
+    });
+}
+
+function applyTheme(theme) {
+    document.body.className = `theme-${theme}`;
+}
+
+function changeMarks(marks) {
+    currentMarks = marks;
+    localStorage.setItem('marks', marks);
+    applyMarks(marks);
+    
+    // Update active button
+    markBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.marks === marks);
+    });
+    
+    // Update existing marks on board
+    cells.forEach((cell, index) => {
+        if (board[index] !== '') {
+            cell.textContent = markStyles[marks][board[index]];
+        }
+    });
+    
+    // Update player indicators
+    updatePlayerIndicators();
+}
+
+function applyMarks(marks) {
+    document.body.classList.remove('marks-classic', 'marks-emoji', 'marks-symbols');
+    document.body.classList.add(`marks-${marks}`);
+}
+
+function updatePlayerIndicators() {
+    const playerXSymbol = playerXIndicator.querySelector('.player-symbol');
+    const playerOSymbol = playerOIndicator.querySelector('.player-symbol');
+    playerXSymbol.textContent = markStyles[currentMarks].X;
+    playerOSymbol.textContent = markStyles[currentMarks].O;
+}

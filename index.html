@@ -9,6 +9,30 @@
 <body>
     <div class="container">
         <h1>Tic-Tac-Toe</h1>
+        
+        <div class="customization-panel">
+            <button class="customize-btn" id="customizeBtn">⚙️ Customize</button>
+            <div class="customize-options" id="customizeOptions">
+                <div class="option-group">
+                    <label>Theme:</label>
+                    <div class="theme-options">
+                        <button class="theme-btn active" data-theme="purple">Purple</button>
+                        <button class="theme-btn" data-theme="ocean">Ocean</button>
+                        <button class="theme-btn" data-theme="sunset">Sunset</button>
+                        <button class="theme-btn" data-theme="forest">Forest</button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <label>Mark Style:</label>
+                    <div class="mark-options">
+                        <button class="mark-btn active" data-marks="classic">X / O</button>
+                        <button class="mark-btn" data-marks="emoji">😎 / 😊</button>
+                        <button class="mark-btn" data-marks="symbols">✖ / ⭕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="players">
             <div class="player player-x active" id="playerX">
                 <div class="player-symbol">X</div>
