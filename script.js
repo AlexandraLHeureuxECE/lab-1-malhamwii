@@ -7,6 +7,7 @@ let gameActive = true;
 const cells = document.querySelectorAll('.cell');
 const statusDisplay = document.getElementById('status');
 const restartBtn = document.getElementById('restartBtn');
+const winLine = document.getElementById('winLine');
 
 // Winning combinations
 const winningConditions = [
@@ -92,6 +93,36 @@ function highlightWinningCells(combination) {
     combination.forEach(index => {
         cells[index].classList.add('winner');
     });
+    drawWinningLine(combination);
+}
+
+// Draw winning line
+function drawWinningLine(combination) {
+    const [a, b, c] = combination;
+    const boardRect = document.getElementById('board').getBoundingClientRect();
+    const cellSize = cells[0].getBoundingClientRect().width;
+    const gap = 10; // Match the gap in grid
+    
+    // Calculate center positions for start and end cells
+    const getCellCenter = (index) => {
+        const row = Math.floor(index / 3);
+        const col = index % 3;
+        const x = col * (cellSize + gap) + cellSize / 2;
+        const y = row * (cellSize + gap) + cellSize / 2;
+        return { x, y };
+    };
+    
+    const start = getCellCenter(a);
+    const end = getCellCenter(c);
+    
+    const line = winLine.querySelector('line');
+    line.setAttribute('x1', start.x);
+    line.setAttribute('y1', start.y);
+    line.setAttribute('x2', end.x);
+    line.setAttribute('y2', end.y);
+    
+    // Trigger animation
+    winLine.classList.add('show');
 }
 
 // Update status display
@@ -111,6 +142,14 @@ function restartGame() {
         cell.textContent = '';
         cell.classList.remove('taken', 'x', 'o', 'winner');
     });
+    
+    // Reset winning line
+    winLine.classList.remove('show');
+    const line = winLine.querySelector('line');
+    line.setAttribute('x1', '0');
+    line.setAttribute('y1', '0');
+    line.setAttribute('x2', '0');
+    line.setAttribute('y2', '0');
     
     updateStatus();
 }

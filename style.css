@@ -47,6 +47,7 @@ h1 {
     gap: 10px;
     margin: 0 auto 30px;
     max-width: 400px;
+    position: relative;
 }
 
 .cell {
@@ -92,6 +93,36 @@ h1 {
     }
     50% {
         transform: scale(1.1);
+    }
+}
+
+.win-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.win-line.show {
+    opacity: 1;
+}
+
+.win-line line {
+    stroke: #ff6b6b;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 0.5s ease-out forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
     }
 }
 
