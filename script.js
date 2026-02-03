@@ -2,12 +2,15 @@
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let gameActive = true;
+let moveCount = 0;
 
 // DOM elements
 const cells = document.querySelectorAll('.cell');
 const statusDisplay = document.getElementById('status');
 const restartBtn = document.getElementById('restartBtn');
 const winLine = document.getElementById('winLine');
+const playerXIndicator = document.getElementById('playerX');
+const playerOIndicator = document.getElementById('playerO');
 
 // Winning combinations
 const winningConditions = [
@@ -45,6 +48,8 @@ function handleCellClick(event) {
     clickedCell.textContent = currentPlayer;
     clickedCell.classList.add('taken');
     clickedCell.classList.add(currentPlayer.toLowerCase());
+    clickedCell.classList.add('placed');
+    moveCount++;
 
     // Check for win or draw
     checkResult();
@@ -69,8 +74,17 @@ function checkResult() {
     }
 
     if (roundWon) {
-        statusDisplay.textContent = `Player ${currentPlayer} Wins! 🎉`;
+        statusDisplay.textContent = `🎉 Player ${currentPlayer} Wins! 🎉`;
+        statusDisplay.className = 'game-over';
         gameActive = false;
+        
+        // Highlight winner indicator
+        if (currentPlayer === 'X') {
+            playerXIndicator.classList.add('winner');
+        } else {
+            playerOIndicator.classList.add('winner');
+        }
+        
         highlightWinningCells(winningCombination);
         return;
     }
@@ -78,8 +92,11 @@ function checkResult() {
     // Check for draw
     const roundDraw = !board.includes('');
     if (roundDraw) {
-        statusDisplay.textContent = "It's a Draw! 🤝";
+        statusDisplay.textContent = "🤝 It's a Draw! Well played both! 🤝";
+        statusDisplay.className = 'game-over';
         gameActive = false;
+        playerXIndicator.classList.remove('active');
+        playerOIndicator.classList.remove('active');
         return;
     }
 
@@ -128,7 +145,24 @@ function drawWinningLine(combination) {
 // Update status display
 function updateStatus() {
     if (gameActive) {
-        statusDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+        statusDisplay.className = currentPlayer === 'X' ? 'x-turn' : 'o-turn';
+        
+        if (moveCount === 0) {
+            statusDisplay.textContent = `Player ${currentPlayer}'s Turn - Click any cell to start!`;
+        } else if (moveCount < 3) {
+            statusDisplay.textContent = `Player ${currentPlayer}'s Turn - Keep playing!`;
+        } else {
+            statusDisplay.textContent = `Player ${currentPlayer}'s Turn - Make your move!`;
+        }
+        
+        // Update player indicators
+        if (currentPlayer === 'X') {
+            playerXIndicator.classList.add('active');
+            playerOIndicator.classList.remove('active');
+        } else {
+            playerOIndicator.classList.add('active');
+            playerXIndicator.classList.remove('active');
+        }
     }
 }
 
@@ -137,11 +171,19 @@ function restartGame() {
     board = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
+    moveCount = 0;
     
     cells.forEach(cell => {
         cell.textContent = '';
-        cell.classList.remove('taken', 'x', 'o', 'winner');
+        cell.classList.remove('taken', 'x', 'o', 'winner', 'placed');
     });
+    
+    // Reset player indicators
+    playerXIndicator.classList.remove('winner');
+    playerOIndicator.classList.remove('winner');
+    playerXIndicator.classList.add('active');
+    playerOIndicator.classList.remove('active');
+    statusDisplay.className = 'x-turn';
     
     // Reset winning line
     winLine.classList.remove('show');
